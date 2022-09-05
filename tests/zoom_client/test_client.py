@@ -11,7 +11,7 @@ def test_client():
 def test_init_from_env(monkeypatch):
     monkeypatch.setenv("ZOOM_ACCOUNT_ID", "aaa")
     monkeypatch.setenv("ZOOM_CLIENT_ID", "bbb")
-    monkeypatch.setenv("ZOOM_SECRET_ID", "ccc")
+    monkeypatch.setenv("ZOOM_CLIENT_SECRET", "ccc")
 
     client = ZoomClient.init_from_env()
     assert client.account_id == "aaa"

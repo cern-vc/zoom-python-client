@@ -1,0 +1,42 @@
+{
+  "python.formatting.provider": "black",
+  "python.analysis.autoSearchPaths": true,
+  "python.analysis.typeCheckingMode": "basic",
+  "editor.formatOnSave": true,
+  "python.linting.enabled": true,
+  "python.linting.pylintEnabled": true,
+  "python.linting.pylintPath": "venv/bin/pylint",
+  "[html]": {
+    "editor.defaultFormatter": "monosans.djlint"
+  },
+  "[django-html]": {
+    "editor.defaultFormatter": "monosans.djlint"
+  },
+  "[handlebars]": {
+    "editor.defaultFormatter": "monosans.djlint"
+  },
+  "[hbs]": {
+    "editor.defaultFormatter": "monosans.djlint"
+  },
+  "[mustache]": {
+    "editor.defaultFormatter": "monosans.djlint"
+  },
+  "[jinja]": {
+    "editor.defaultFormatter": "monosans.djlint"
+  },
+  "[jinja-html]": {
+    "editor.defaultFormatter": "monosans.djlint"
+  },
+  "[nj]": {
+    "editor.defaultFormatter": "monosans.djlint"
+  },
+  "[njk]": {
+    "editor.defaultFormatter": "monosans.djlint"
+  },
+  "[nunjucks]": {
+    "editor.defaultFormatter": "monosans.djlint"
+  },
+  "[twig]": {
+    "editor.defaultFormatter": "monosans.djlint"
+  }
+}

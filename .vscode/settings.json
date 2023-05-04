@@ -1,11 +1,13 @@
 {
-  "python.formatting.provider": "black",
   "python.analysis.autoSearchPaths": true,
   "python.analysis.typeCheckingMode": "basic",
   "editor.formatOnSave": true,
   "python.linting.enabled": true,
   "python.linting.pylintEnabled": true,
   "python.linting.pylintPath": "venv/bin/pylint",
+  "terminal.integrated.env.osx": {
+    "PYTHONPATH": "${workspaceFolder}"
+  },
   "[html]": {
     "editor.defaultFormatter": "monosans.djlint"
   },
@@ -38,5 +40,8 @@
   },
   "[twig]": {
     "editor.defaultFormatter": "monosans.djlint"
+  },
+  "[python]": {
+    "editor.defaultFormatter": "ms-python.black-formatter"
   }
 }

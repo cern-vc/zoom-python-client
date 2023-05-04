@@ -9,7 +9,9 @@ logger = logging.getLogger("python_zoom_client")
 
 class ZoomClientInterface(ABC):
     @abstractmethod
-    def make_get_request(self, api_path: str) -> requests.Response:
+    def make_get_request(
+        self, api_path: str, parameters: dict = {}
+    ) -> requests.Response:
         logger.warning("Method not implemented")
         raise NotImplementedError
 

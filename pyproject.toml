@@ -1,3 +1,39 @@
 [build-system]
-requires = ['setuptools>=42']
-build-backend = 'setuptools.build_meta'
+requires = ["setuptools>=61.0", "setuptools-scm"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "zoom-python-client"
+version = "0.0.1"
+dependencies = ["python-dotenv==0.21.0", "requests==2.26.0"]
+authors = [{ name = "Rene Fernandez", email = "rene.fernandez@cern.ch" }]
+description = "Zoom API client for Python"
+readme = "README.md"
+requires-python = ">=3.9"
+classifiers = [
+  "Programming Language :: Python :: 3",
+  "License :: OSI Approved :: GPL3 License",
+  "Operating System :: OS Independent",
+]
+
+[project.optional-dependencies]
+dev = [
+  "black==22.6.0",
+  "pre-commit==2.15.0",
+  "pylint==2.13.4",
+  "pytest==7.1.3",
+  "pytest-cov==3.0.0",
+  "responses==0.17.0",
+]
+
+[project.urls]
+"Homepage" = "https://github.com/renefs/zoom-python-client"
+"Bug Tracker" = "https://github.com/renefs/zoom-python-client/issues"
+
+[tool.setuptools]
+package-dir = { "" = "src" }
+
+[tool.setuptools.packages.find]
+where = ["src"]
+# include = ["src"]
+exclude = ["tests*", "example*"]

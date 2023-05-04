@@ -5,28 +5,28 @@ from typing import Any, Mapping
 import requests
 from dotenv import load_dotenv
 
-from zoom_client.api_client import ApiClient
-from zoom_client.client_components.meeting_livestreams.meeting_livestreams_component import (
+from zoom_python_client.api_client import ApiClient
+from zoom_python_client.client_components.meeting_livestreams.meeting_livestreams_component import (
     MeetingLiveStreamsComponent,
 )
-from zoom_client.client_components.meetings.meetings_component import (
+from zoom_python_client.client_components.meetings.meetings_component import (
     MeetingsComponent,
 )
-from zoom_client.client_components.users.users_component import (
+from zoom_python_client.client_components.users.users_component import (
     UsersComponent,
 )
-from zoom_client.client_components.webinar_livestreams.webinar_livestreams_component import (
+from zoom_python_client.client_components.webinar_livestreams.webinar_livestreams_component import (
     WebinarLiveStreamsComponent,
 )
-from zoom_client.client_components.webinars.webinars_component import (
+from zoom_python_client.client_components.webinars.webinars_component import (
     WebinarsComponent,
 )
-from zoom_client.utils.file_system import get_project_dir
-from zoom_client.utils.logger import setup_logs
-from zoom_client.zoom_auth_api.zoom_auth_api_client import (
+from zoom_python_client.utils.file_system import get_project_dir
+from zoom_python_client.utils.logger import setup_logs
+from zoom_python_client.zoom_auth_api.zoom_auth_api_client import (
     ZoomAuthApiClient,
 )
-from zoom_client.zoom_client_interface import ZoomClientInterface
+from zoom_python_client.zoom_client_interface import ZoomClientInterface
 
 
 class ZoomClientEnvError(Exception):

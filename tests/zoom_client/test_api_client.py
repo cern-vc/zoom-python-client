@@ -1,5 +1,5 @@
 import responses
-from zoom_client.api_client import ApiClient
+from zoom_python_client.api_client import ApiClient
 
 
 def test_api_client_build_headers():

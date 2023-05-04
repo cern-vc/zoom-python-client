@@ -1,11 +1,11 @@
 import responses
 import pytest
-from tests.zoom_client.base_test_case import TestCaseWithAuth
-from zoom_client.zoom_api_client import ZoomApiClient
-from zoom_client.client_components.webinar_livestreams.webinar_livestreams_component import (
+from tests.zoom_python_client.base_test_case import TestCaseWithAuth
+from zoom_python_client.zoom_api_client import ZoomApiClient
+from zoom_python_client.client_components.webinar_livestreams.webinar_livestreams_component import (
     WebinarLiveStreamsComponent,
 )
-from zoom_client.zoom_auth_api.zoom_auth_api_client import ZoomAuthApiClientError
+from zoom_python_client.zoom_auth_api.zoom_auth_api_client import ZoomAuthApiClientError
 
 
 class TestWebinarLiveStreamsComponent(TestCaseWithAuth):

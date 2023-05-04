@@ -1,5 +1,5 @@
 import os
-from zoom_client.utils.file_system import get_project_dir
+from zoom_python_client.utils.file_system import get_project_dir
 
 
 def test_get_project_dir():

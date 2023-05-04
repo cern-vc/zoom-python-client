@@ -3,7 +3,7 @@ import os
 from base64 import b64encode
 from time import time
 
-from zoom_client.api_client import ApiClient
+from zoom_python_client.api_client import ApiClient
 
 logger = logging.getLogger("zoom_python_client")
 

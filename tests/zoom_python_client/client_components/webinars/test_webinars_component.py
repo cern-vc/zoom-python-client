@@ -1,9 +1,10 @@
 import responses
+
 from tests.zoom_python_client.base_test_case import TestCaseWithAuth
-from zoom_python_client.zoom_api_client import ZoomApiClient
 from zoom_python_client.client_components.webinars.webinars_component import (
     WebinarsComponent,
 )
+from zoom_python_client.zoom_api_client import ZoomApiClient
 
 
 class TestWebinarsComponent(TestCaseWithAuth):

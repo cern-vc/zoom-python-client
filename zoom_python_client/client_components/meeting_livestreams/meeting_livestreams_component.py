@@ -1,9 +1,7 @@
 from json import JSONDecodeError
 from typing import TypedDict
 
-from zoom_python_client.zoom_auth_api.zoom_auth_api_client import (
-    ZoomAuthApiClientError,
-)
+from zoom_python_client.zoom_auth_api.zoom_auth_api_client import ZoomAuthApiClientError
 from zoom_python_client.zoom_client_interface import ZoomClientInterface
 
 

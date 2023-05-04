@@ -21,7 +21,6 @@ def env_variable(request):
 
 
 def test_init_from_env_exception(env_variable, monkeypatch):
-
     monkeypatch.setenv(env_variable, "aaa")
     with pytest.raises(ZoomClientEnvError):
         ZoomApiClient.init_from_env()

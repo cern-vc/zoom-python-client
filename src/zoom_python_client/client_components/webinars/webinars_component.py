@@ -1,4 +1,4 @@
-from zoom_client.zoom_client_interface import ZoomClientInterface
+from zoom_python_client.zoom_client_interface import ZoomClientInterface
 
 
 class WebinarsComponent:

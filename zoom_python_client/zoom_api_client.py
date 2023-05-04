@@ -101,9 +101,23 @@ class ZoomApiClient(ZoomClientInterface):
         headers = self.api_client.build_headers(extra_headers=zoom_headers)
         return headers
 
-    def make_get_request(self, api_path: str) -> requests.Response:
+    def build_query_string_from_dict(self, parameters: dict) -> str:
+        query_string = "?"
+        for key, value in parameters.items():
+            if value:
+                query_string += f"{key}={value}&"
+        return query_string
+
+    def make_get_request(
+        self, api_path: str, parameters: dict = {}
+    ) -> requests.Response:
         headers = self.build_zoom_authorization_headers()
-        response = self.api_client.make_get_request(api_path, headers=headers)
+        # convert parameters dict to query string
+        query_string = self.build_query_string_from_dict(parameters)
+
+        response = self.api_client.make_get_request(
+            api_path + query_string, headers=headers
+        )
         return response
 
     def make_post_request(

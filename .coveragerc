@@ -1,0 +1,2 @@
+[run]
+omit = zoom_client/zoom_client_interface.py

@@ -1,5 +1,5 @@
-import sys
 import logging
+import sys
 
 
 def setup_logs(log_level=logging.WARNING):

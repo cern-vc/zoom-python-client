@@ -1,7 +1,8 @@
-import os
 import logging
+import os
 from base64 import b64encode
 from time import time
+
 from zoom_client.api_client import ApiClient
 
 logger = logging.getLogger("zoom_python_client")
@@ -12,7 +13,6 @@ class ZoomAuthApiClientError(Exception):
 
 
 class ZoomAuthApiClient:
-
     oauth_base_url: str = "https://zoom.us/oauth"
     minimum_expire_time_seconds: int = 300
 

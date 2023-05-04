@@ -1,21 +1,31 @@
-import os
 import logging
+import os
+from typing import Any, Mapping
+
 import requests
 from dotenv import load_dotenv
+
+from zoom_client.api_client import ApiClient
 from zoom_client.client_components.meeting_livestreams.meeting_livestreams_component import (
     MeetingLiveStreamsComponent,
 )
-from zoom_client.client_components.meetings.meetings_component import MeetingsComponent
-from zoom_client.client_components.users.users_component import UsersComponent
+from zoom_client.client_components.meetings.meetings_component import (
+    MeetingsComponent,
+)
+from zoom_client.client_components.users.users_component import (
+    UsersComponent,
+)
 from zoom_client.client_components.webinar_livestreams.webinar_livestreams_component import (
     WebinarLiveStreamsComponent,
 )
-from zoom_client.client_components.webinars.webinars_component import WebinarsComponent
+from zoom_client.client_components.webinars.webinars_component import (
+    WebinarsComponent,
+)
 from zoom_client.utils.file_system import get_project_dir
-
-from zoom_client.api_client import ApiClient
 from zoom_client.utils.logger import setup_logs
-from zoom_client.zoom_auth_api.zoom_auth_api_client import ZoomAuthApiClient
+from zoom_client.zoom_auth_api.zoom_auth_api_client import (
+    ZoomAuthApiClient,
+)
 from zoom_client.zoom_client_interface import ZoomClientInterface
 
 
@@ -28,7 +38,6 @@ class ZoomClientError(Exception):
 
 
 class ZoomApiClient(ZoomClientInterface):
-
     api_endpoint: str = "https://api.zoom.us/v2"
 
     @staticmethod
@@ -97,14 +106,18 @@ class ZoomApiClient(ZoomClientInterface):
         response = self.api_client.make_get_request(api_path, headers=headers)
         return response
 
-    def make_post_request(self, api_path: str, data: dict) -> requests.Response:
+    def make_post_request(
+        self, api_path: str, data: Mapping[str, Any]
+    ) -> requests.Response:
         headers = self.build_zoom_authorization_headers()
         response = self.api_client.make_post_request(
             api_path, headers=headers, data=data
         )
         return response
 
-    def make_patch_request(self, api_path: str, data: dict) -> requests.Response:
+    def make_patch_request(
+        self, api_path: str, data: Mapping[str, Any]
+    ) -> requests.Response:
         headers = self.build_zoom_authorization_headers()
         response = self.api_client.make_patch_request(
             api_path, headers=headers, data=data

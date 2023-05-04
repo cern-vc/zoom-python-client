@@ -1,6 +1,9 @@
 from json import JSONDecodeError
 from typing import TypedDict
-from zoom_client.zoom_auth_api.zoom_auth_api_client import ZoomAuthApiClientError
+
+from zoom_client.zoom_auth_api.zoom_auth_api_client import (
+    ZoomAuthApiClientError,
+)
 from zoom_client.zoom_client_interface import ZoomClientInterface
 
 
@@ -38,8 +41,7 @@ class MeetingLiveStreamsComponent:
 
     def update_livestream_status(self, meeting_id: str, action: str) -> bool:
         api_path = f"/meetings/{meeting_id}/livestream/status"
-        data = {"action": action}
-        data = LiveStreamStatusDict(action=action)
+        data: LiveStreamStatusDict = {"action": action}
         response = self.client.make_patch_request(api_path, data)
         if response.status_code == 204:
             return True

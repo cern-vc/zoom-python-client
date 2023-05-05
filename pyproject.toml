@@ -33,13 +33,13 @@ dev = [
 "Homepage" = "https://github.com/renefs/zoom-python-client"
 "Bug Tracker" = "https://github.com/renefs/zoom-python-client/issues"
 
-[tool.setuptools]
-package-dir = { "" = "src" }
+# [tool.setuptools]
+# package-dir = { "" = "src" }
 
 [tool.setuptools.packages.find]
-where = ["src"]
+# where = ["src"]
 # include = ["src"]
-exclude = ["tests*", "example*"]
+exclude = ["tests*", "example*", ".github*", ".git*", ".vscode*"]
 
 [tool.isort]
 profile = "black"

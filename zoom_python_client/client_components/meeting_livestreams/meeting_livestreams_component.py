@@ -9,6 +9,7 @@ class LiveStreamDict(TypedDict):
     stream_url: str
     stream_key: str
     page_url: str
+    resolution: str
 
 
 class LiveStreamStatusDict(TypedDict):

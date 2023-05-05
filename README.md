@@ -1,6 +1,6 @@
 # Zoom Python client
 
-[![Python tests](https://github.com/renefs/zoom-python-client/actions/workflows/python-tests.yml/badge.svg)](https://github.com/renefs/zoom-python-client/actions/workflows/python-tests.yml) [![CodeQL](https://github.com/renefs/zoom-python-client/actions/workflows/codeql-analysis.yml/badge.svg)](https://github.com/renefs/zoom-python-client/actions/workflows/codeql-analysis.yml) [![codecov](https://codecov.io/gh/renefs/zoom-python-client/branch/main/graph/badge.svg?token=04EY0K0P2S)](https://codecov.io/gh/renefs/zoom-python-client)
+[![Python tests](https://github.com/cern-vc/zoom-python-client/actions/workflows/python-tests.yml/badge.svg)](https://github.com/cern-vc/zoom-python-client/actions/workflows/python-tests.yml) [![pre-commit](https://github.com/cern-vc/zoom-python-client/actions/workflows/pre-commit.yaml/badge.svg)](https://github.com/cern-vc/zoom-python-client/actions/workflows/pre-commit.yaml) [![CodeQL](https://github.com/cern-vc/zoom-python-client/actions/workflows/codeql-analysis.yml/badge.svg)](https://github.com/cern-vc/zoom-python-client/actions/workflows/codeql-analysis.yml) [![codecov](https://codecov.io/gh/cern-vc/zoom-python-client/branch/main/graph/badge.svg?token=04EY0K0P2S)](https://codecov.io/gh/cern-vc/zoom-python-client)
 
 > ⚠️ WIP: This project is a WIP and therefore may contain bugs. Use it at your own risk and keep this in mind if you decide to use it in production environments.
 

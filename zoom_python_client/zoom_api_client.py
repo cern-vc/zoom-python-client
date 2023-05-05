@@ -12,9 +12,7 @@ from zoom_python_client.client_components.meeting_livestreams.meeting_livestream
 from zoom_python_client.client_components.meetings.meetings_component import (
     MeetingsComponent,
 )
-from zoom_python_client.client_components.users.users_component import (
-    UsersComponent,
-)
+from zoom_python_client.client_components.users.users_component import UsersComponent
 from zoom_python_client.client_components.webinar_livestreams.webinar_livestreams_component import (
     WebinarLiveStreamsComponent,
 )
@@ -23,9 +21,7 @@ from zoom_python_client.client_components.webinars.webinars_component import (
 )
 from zoom_python_client.utils.file_system import get_project_dir
 from zoom_python_client.utils.logger import setup_logs
-from zoom_python_client.zoom_auth_api.zoom_auth_api_client import (
-    ZoomAuthApiClient,
-)
+from zoom_python_client.zoom_auth_api.zoom_auth_api_client import ZoomAuthApiClient
 from zoom_python_client.zoom_client_interface import ZoomClientInterface
 
 

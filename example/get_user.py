@@ -1,5 +1,6 @@
 import logging
 import os
+
 from zoom_python_client.zoom_api_client import ZoomApiClient
 
 USER_ID = os.environ["USER_ID"]

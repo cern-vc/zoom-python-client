@@ -1,5 +1,7 @@
 from time import time
+
 import pytest
+
 from zoom_python_client.zoom_auth_api.zoom_auth_api_client import (
     ZoomAuthApiClient,
     ZoomAuthApiClientError,

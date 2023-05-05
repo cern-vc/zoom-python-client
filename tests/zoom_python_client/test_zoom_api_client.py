@@ -1,8 +1,8 @@
 import pytest
 import responses
+
 from tests.zoom_python_client.base_test_case import TestCaseWithAuth
-from zoom_python_client.zoom_api_client import ZoomClientEnvError
-from zoom_python_client.zoom_api_client import ZoomApiClient
+from zoom_python_client.zoom_api_client import ZoomApiClient, ZoomClientEnvError
 
 
 def test_init_from_env(monkeypatch):
@@ -21,7 +21,6 @@ def env_variable(request):
 
 
 def test_init_from_env_exception(env_variable, monkeypatch):
-
     monkeypatch.setenv(env_variable, "aaa")
     with pytest.raises(ZoomClientEnvError):
         ZoomApiClient.init_from_env()

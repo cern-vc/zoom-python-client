@@ -1,9 +1,8 @@
 import logging
 import os
+
+from zoom_python_client.client_components.users.users_component import MeetingsListDict
 from zoom_python_client.zoom_api_client import ZoomApiClient
-from zoom_python_client.client_components.users.users_component import (
-    MeetingsListDict,
-)
 
 USER_ID = os.environ["USER_ID"]
 zoom_client = ZoomApiClient.init_from_dotenv(logging.DEBUG)

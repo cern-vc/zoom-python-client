@@ -8,38 +8,9 @@
   "terminal.integrated.env.osx": {
     "PYTHONPATH": "${workspaceFolder}"
   },
-  "[html]": {
-    "editor.defaultFormatter": "monosans.djlint"
-  },
-  "[django-html]": {
-    "editor.defaultFormatter": "monosans.djlint"
-  },
-  "[handlebars]": {
-    "editor.defaultFormatter": "monosans.djlint"
-  },
-  "[hbs]": {
-    "editor.defaultFormatter": "monosans.djlint"
-  },
-  "[mustache]": {
-    "editor.defaultFormatter": "monosans.djlint"
-  },
-  "[jinja]": {
-    "editor.defaultFormatter": "monosans.djlint"
-  },
-  "[jinja-html]": {
-    "editor.defaultFormatter": "monosans.djlint"
-  },
-  "[nj]": {
-    "editor.defaultFormatter": "monosans.djlint"
-  },
-  "[njk]": {
-    "editor.defaultFormatter": "monosans.djlint"
-  },
-  "[nunjucks]": {
-    "editor.defaultFormatter": "monosans.djlint"
-  },
-  "[twig]": {
-    "editor.defaultFormatter": "monosans.djlint"
+  "search.exclude": {
+    "**/dist": true,
+    "**/venv": true
   },
   "[python]": {
     "editor.defaultFormatter": "ms-python.black-formatter"

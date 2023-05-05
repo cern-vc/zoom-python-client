@@ -4,6 +4,7 @@
 
 > ⚠️ WIP: This project is a WIP and therefore may contain bugs. Use it at your own risk and keep this in mind if you decide to use it in production environments.
 
+Zoom API Python client with support for [Server to Server Oauth tokens](https://developers.zoom.us/docs/internal-apps/s2s-oauth/)
 
 ## Usage
 
@@ -54,3 +55,21 @@ print(result)
 result = zoom_client.meetings.get_meeting(MEETING_ID)
 print(result)
 ```
+
+## Available endpoints
+
+### **users**:
+1. get user details
+2. get user meetings
+### **meetings**:
+1. get meeting details
+### **meeting live streams**:
+1. get meeting live stream
+2. update live stream
+3. update livestream status
+### **webinars**:
+1. get webinar details
+### **webinar live streams**:
+1. get webinar live stream
+2. update webinar live stream
+3. update webinar livestream status

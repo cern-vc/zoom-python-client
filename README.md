@@ -63,6 +63,7 @@ print(result)
 2. get user meetings
 ### **meetings**:
 1. get meeting details
+2. get meeting token
 ### **meeting live streams**:
 1. get meeting live stream
 2. update live stream

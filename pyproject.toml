@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "zoom-python-client"
-version = "0.0.3"
+version = "0.0.4"
 dependencies = ["python-dotenv>=0.21.0", "requests>=2.26.0"]
 authors = [{ name = "Rene Fernandez", email = "rene.fernandez@cern.ch" }]
 description = "Zoom API client for Python"

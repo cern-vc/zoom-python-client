@@ -166,6 +166,7 @@ class ZoomApiClient(ZoomClientInterface):
             logger.info(
                 f"401 accessing resource PATH. Building headers again. Error: {error}"
             )
+            headers = self.build_zoom_authorization_headers()
             response = self.api_client.make_patch_request(
                 api_path, headers=headers, data=data
             )

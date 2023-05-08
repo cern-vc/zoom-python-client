@@ -52,8 +52,8 @@ class ZoomAuthApiClient:
 
     def extract_access_token(self, result):
         if "access_token" in result and "expires_in" in result:
-            os.environ["ZOOM_ACCESS_TOKEN"] = result["access_token"]
             try:
+                os.environ["ZOOM_ACCESS_TOKEN"] = result["access_token"]
                 os.environ["ZOOM_ACCESS_TOKEN_EXPIRE"] = str(
                     int(time()) + int(result["expires_in"])
                 )

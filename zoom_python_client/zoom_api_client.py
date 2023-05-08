@@ -24,6 +24,8 @@ from zoom_python_client.utils.logger import setup_logs
 from zoom_python_client.zoom_auth_api.zoom_auth_api_client import ZoomAuthApiClient
 from zoom_python_client.zoom_client_interface import ZoomClientInterface
 
+logger = logging.getLogger("zoom_python_client")
+
 
 class ZoomClientEnvError(Exception):
     pass
@@ -85,11 +87,14 @@ class ZoomApiClient(ZoomClientInterface):
         # Initialize components
         self.init_components()
 
-    def build_zoom_authorization_headers(self) -> dict:
+    def build_zoom_authorization_headers(self, force_token=False) -> dict:
         access_token = os.getenv("ZOOM_ACCESS_TOKEN", default=None)
+        expire_seconds = os.getenv("ZOOM_ACCESS_TOKEN_EXPIRE", default=None)
         if (
             not access_token
+            or not expire_seconds
             or self.authentication_client.is_zoom_access_token_expired()
+            or force_token
         ):
             access_token = self.authentication_client.get_acceess_token()
 
@@ -110,26 +115,58 @@ class ZoomApiClient(ZoomClientInterface):
         headers = self.build_zoom_authorization_headers()
         # convert parameters dict to query string
         query_string = self.build_query_string_from_dict(parameters)
-
-        response = self.api_client.make_get_request(
-            api_path + query_string, headers=headers
-        )
+        response = requests.Response()
+        try:
+            response = self.api_client.make_get_request(
+                api_path + query_string, headers=headers
+            )
+        except requests.exceptions.HTTPError as error:
+            logger.info(
+                f"401 accessing resource GET. Building headers again. Error: {error}"
+            )
+            if error.response.status_code == 401:
+                headers = self.build_zoom_authorization_headers(force_token=True)
+                response = self.api_client.make_get_request(
+                    api_path + query_string, headers=headers
+                )
         return response
 
     def make_post_request(
         self, api_path: str, data: Mapping[str, Any]
     ) -> requests.Response:
         headers = self.build_zoom_authorization_headers()
-        response = self.api_client.make_post_request(
-            api_path, headers=headers, data=data
-        )
+        response = requests.Response()
+        try:
+            response = self.api_client.make_post_request(
+                api_path, headers=headers, data=data
+            )
+        except requests.exceptions.HTTPError as error:
+            logger.info(
+                f"401 accessing resource POST. Building headers again. Error: {error}"
+            )
+            if error.response.status_code == 401:
+                headers = self.build_zoom_authorization_headers(force_token=True)
+                response = self.api_client.make_post_request(
+                    api_path, headers=headers, data=data
+                )
+
         return response
 
     def make_patch_request(
         self, api_path: str, data: Mapping[str, Any]
     ) -> requests.Response:
         headers = self.build_zoom_authorization_headers()
-        response = self.api_client.make_patch_request(
-            api_path, headers=headers, data=data
-        )
+        response = requests.Response()
+
+        try:
+            response = self.api_client.make_patch_request(
+                api_path, headers=headers, data=data
+            )
+        except requests.exceptions.HTTPError as error:
+            logger.info(
+                f"401 accessing resource PATH. Building headers again. Error: {error}"
+            )
+            response = self.api_client.make_patch_request(
+                api_path, headers=headers, data=data
+            )
         return response

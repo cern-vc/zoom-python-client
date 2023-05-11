@@ -20,7 +20,6 @@ from zoom_python_client.client_components.webinars.webinars_component import (
     WebinarsComponent,
 )
 from zoom_python_client.utils.file_system import get_project_dir
-from zoom_python_client.utils.logger import setup_logs
 from zoom_python_client.zoom_auth_api.zoom_auth_api_client import ZoomAuthApiClient
 from zoom_python_client.zoom_client_interface import ZoomClientInterface
 
@@ -76,8 +75,7 @@ class ZoomApiClient(ZoomClientInterface):
         api_endpoint="https://api.zoom.us/v2",
         log_level=logging.WARNING,
     ):
-        setup_logs(log_level)
-
+        logger.info(f"Initializing Zoom API Client with logging level: {log_level}")
         self.api_endpoint = api_endpoint
         self.api_client = ApiClient(self.api_endpoint)
         self.authentication_client = ZoomAuthApiClient(

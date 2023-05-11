@@ -23,6 +23,9 @@ from zoom_python_client.utils.file_system import get_project_dir
 from zoom_python_client.zoom_auth_api.zoom_auth_api_client import ZoomAuthApiClient
 from zoom_python_client.zoom_client_interface import ZoomClientInterface
 
+# This goes into your library somewhere
+logging.getLogger("zoom_python_client").addHandler(logging.NullHandler())
+
 logger = logging.getLogger("zoom_python_client")
 
 
@@ -43,9 +46,7 @@ class ZoomApiClient(ZoomClientInterface):
             account_id = os.environ["ZOOM_ACCOUNT_ID"]
             client_id = os.environ["ZOOM_CLIENT_ID"]
             client_secret = os.environ["ZOOM_CLIENT_SECRET"]
-            zoom_client = ZoomApiClient(
-                account_id, client_id, client_secret, log_level=log_level
-            )
+            zoom_client = ZoomApiClient(account_id, client_id, client_secret)
             return zoom_client
         except KeyError as error:
             raise ZoomClientEnvError(
@@ -73,9 +74,7 @@ class ZoomApiClient(ZoomClientInterface):
         client_id: str,
         client_secret: str,
         api_endpoint="https://api.zoom.us/v2",
-        log_level=logging.WARNING,
     ):
-        logger.info(f"Initializing Zoom API Client with logging level: {log_level}")
         self.api_endpoint = api_endpoint
         self.api_client = ApiClient(self.api_endpoint)
         self.authentication_client = ZoomAuthApiClient(

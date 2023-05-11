@@ -121,10 +121,9 @@ class ZoomApiClient(ZoomClientInterface):
                 api_path + query_string, headers=headers
             )
         except requests.exceptions.HTTPError as error:
-            logger.info(
-                f"401 accessing resource GET. Building headers again. Error: {error}"
-            )
+            logger.warning(f"Error from Zoom on GET request: {error}")
             if error.response.status_code == 401:
+                logger.warning(f"Building headers again. Error: {error}")
                 headers = self.build_zoom_authorization_headers(force_token=True)
                 response = self.api_client.make_get_request(
                     api_path + query_string, headers=headers
@@ -141,10 +140,9 @@ class ZoomApiClient(ZoomClientInterface):
                 api_path, headers=headers, data=data
             )
         except requests.exceptions.HTTPError as error:
-            logger.info(
-                f"401 accessing resource POST. Building headers again. Error: {error}"
-            )
+            logger.warning(f"Error from Zoom on POST request: {error}")
             if error.response.status_code == 401:
+                logger.warning(f"Building headers again for POST. Error: {error}")
                 headers = self.build_zoom_authorization_headers(force_token=True)
                 response = self.api_client.make_post_request(
                     api_path, headers=headers, data=data
@@ -163,11 +161,12 @@ class ZoomApiClient(ZoomClientInterface):
                 api_path, headers=headers, data=data
             )
         except requests.exceptions.HTTPError as error:
-            logger.info(
-                f"401 accessing resource PATH. Building headers again. Error: {error}"
-            )
-            headers = self.build_zoom_authorization_headers()
-            response = self.api_client.make_patch_request(
-                api_path, headers=headers, data=data
-            )
+            logger.warning(f"Error from Zoom on PATCH request: {error}")
+
+            if error.response.status_code == 401:
+                logger.warning(f"Building headers again for PATCH. Error: {error}")
+                headers = self.build_zoom_authorization_headers()
+                response = self.api_client.make_patch_request(
+                    api_path, headers=headers, data=data
+                )
         return response

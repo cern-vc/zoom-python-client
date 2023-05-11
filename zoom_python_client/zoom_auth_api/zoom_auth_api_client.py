@@ -61,7 +61,7 @@ class ZoomAuthApiClient:
                 raise ZoomAuthApiClientError(
                     "Unable to set access_token expiration. expires_in is not an int"
                 ) from error
-            logger.debug("Access token extracted")
+            logger.debug("Access token extracted from oauth response")
             return result["access_token"]
 
         raise ZoomAuthApiClientError("Unable to get access_token")

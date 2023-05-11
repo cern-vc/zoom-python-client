@@ -41,7 +41,7 @@ class ZoomApiClient(ZoomClientInterface):
     api_endpoint: str = "https://api.zoom.us/v2"
 
     @staticmethod
-    def init_from_env(log_level=logging.WARNING):
+    def init_from_env():
         try:
             account_id = os.environ["ZOOM_ACCOUNT_ID"]
             client_id = os.environ["ZOOM_CLIENT_ID"]
@@ -54,10 +54,10 @@ class ZoomApiClient(ZoomClientInterface):
             ) from error
 
     @staticmethod
-    def init_from_dotenv(log_level=logging.WARNING, custom_dotenv=".env"):
+    def init_from_dotenv(custom_dotenv=".env"):
         project_dir = get_project_dir()
         load_dotenv(os.path.join(project_dir, custom_dotenv), verbose=True)
-        zoom_client = ZoomApiClient.init_from_env(log_level)
+        zoom_client = ZoomApiClient.init_from_env()
         return zoom_client
 
     def init_components(self):

@@ -93,6 +93,7 @@ class ZoomApiClient(ZoomClientInterface):
             or self.authentication_client.is_zoom_access_token_expired()
             or force_token
         ):
+            logger.debug("Token is not in the environment. Requesting new token.")
             access_token = self.authentication_client.get_acceess_token()
 
         zoom_headers = {"Authorization": "Bearer " + access_token}

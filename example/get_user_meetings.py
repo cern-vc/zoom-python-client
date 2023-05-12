@@ -2,10 +2,12 @@ import logging
 import os
 
 from zoom_python_client.client_components.users.users_component import MeetingsListDict
+from zoom_python_client.utils.logger import setup_logs
 from zoom_python_client.zoom_api_client import ZoomApiClient
 
+setup_logs(log_level=logging.DEBUG)
+zoom_client = ZoomApiClient.init_from_dotenv()
 USER_ID = os.environ["USER_ID"]
-zoom_client = ZoomApiClient.init_from_dotenv(logging.DEBUG)
 
 
 data: MeetingsListDict = {

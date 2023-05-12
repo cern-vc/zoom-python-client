@@ -1,6 +1,6 @@
 import logging
 import os
-from typing import Any, Mapping
+from typing import Any, Mapping, Union
 
 import requests
 from dotenv import load_dotenv
@@ -108,15 +108,15 @@ class ZoomApiClient(ZoomClientInterface):
 
     def make_get_request(
         self, api_path: str, parameters: dict = {}
-    ) -> requests.Response:
+    ) -> Union[requests.Response, None]:
         headers = self.build_zoom_authorization_headers()
         # convert parameters dict to query string
         query_string = self.build_query_string_from_dict(parameters)
-        response = requests.Response()
         try:
             response = self.api_client.make_get_request(
                 api_path + query_string, headers=headers
             )
+            return response
         except requests.exceptions.HTTPError as error:
             logger.warning(f"Error from Zoom on GET request: {error}")
             if error.response.status_code == 401:
@@ -125,17 +125,19 @@ class ZoomApiClient(ZoomClientInterface):
                 response = self.api_client.make_get_request(
                     api_path + query_string, headers=headers
                 )
-        return response
+                return response
+        return None
 
     def make_post_request(
         self, api_path: str, data: Mapping[str, Any]
-    ) -> requests.Response:
+    ) -> Union[requests.Response, None]:
         headers = self.build_zoom_authorization_headers()
         response = requests.Response()
         try:
             response = self.api_client.make_post_request(
                 api_path, headers=headers, data=data
             )
+            return response
         except requests.exceptions.HTTPError as error:
             logger.warning(f"Error from Zoom on POST request: {error}")
             if error.response.status_code == 401:
@@ -145,18 +147,19 @@ class ZoomApiClient(ZoomClientInterface):
                     api_path, headers=headers, data=data
                 )
 
-        return response
+                return response
+        return None
 
     def make_patch_request(
         self, api_path: str, data: Mapping[str, Any]
-    ) -> requests.Response:
+    ) -> Union[requests.Response, None]:
         headers = self.build_zoom_authorization_headers()
-        response = requests.Response()
 
         try:
             response = self.api_client.make_patch_request(
                 api_path, headers=headers, data=data
             )
+            return response
         except requests.exceptions.HTTPError as error:
             logger.warning(f"Error from Zoom on PATCH request: {error}")
 
@@ -166,4 +169,5 @@ class ZoomApiClient(ZoomClientInterface):
                 response = self.api_client.make_patch_request(
                     api_path, headers=headers, data=data
                 )
-        return response
+                return response
+        return None

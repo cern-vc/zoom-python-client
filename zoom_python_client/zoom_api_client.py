@@ -95,7 +95,8 @@ class ZoomApiClient(ZoomClientInterface):
         ):
             logger.debug("Token is not in the environment. Requesting new token.")
             access_token = self.authentication_client.get_acceess_token()
-
+        else:
+            logger.debug("The token is the environment. No need for a new token.")
         zoom_headers = {"Authorization": "Bearer " + access_token}
         headers = self.api_client.build_headers(extra_headers=zoom_headers)
         return headers
@@ -113,62 +114,27 @@ class ZoomApiClient(ZoomClientInterface):
         headers = self.build_zoom_authorization_headers()
         # convert parameters dict to query string
         query_string = self.build_query_string_from_dict(parameters)
-        try:
-            response = self.api_client.make_get_request(
-                api_path + query_string, headers=headers
-            )
-            return response
-        except requests.exceptions.HTTPError as error:
-            logger.warning(f"Error from Zoom on GET request: {error}")
-            if error.response.status_code == 401:
-                logger.warning(f"Building headers again. Error: {error}")
-                headers = self.build_zoom_authorization_headers(force_token=True)
-                response = self.api_client.make_get_request(
-                    api_path + query_string, headers=headers
-                )
-                return response
-        return None
+        response = self.api_client.make_get_request(
+            api_path + query_string, headers=headers
+        )
+        return response
 
     def make_post_request(
         self, api_path: str, data: Mapping[str, Any]
     ) -> Union[requests.Response, None]:
         headers = self.build_zoom_authorization_headers()
         response = requests.Response()
-        try:
-            response = self.api_client.make_post_request(
-                api_path, headers=headers, data=data
-            )
-            return response
-        except requests.exceptions.HTTPError as error:
-            logger.warning(f"Error from Zoom on POST request: {error}")
-            if error.response.status_code == 401:
-                logger.warning(f"Building headers again for POST. Error: {error}")
-                headers = self.build_zoom_authorization_headers(force_token=True)
-                response = self.api_client.make_post_request(
-                    api_path, headers=headers, data=data
-                )
-
-                return response
-        return None
+        response = self.api_client.make_post_request(
+            api_path, headers=headers, data=data
+        )
+        return response
 
     def make_patch_request(
         self, api_path: str, data: Mapping[str, Any]
     ) -> Union[requests.Response, None]:
         headers = self.build_zoom_authorization_headers()
 
-        try:
-            response = self.api_client.make_patch_request(
-                api_path, headers=headers, data=data
-            )
-            return response
-        except requests.exceptions.HTTPError as error:
-            logger.warning(f"Error from Zoom on PATCH request: {error}")
-
-            if error.response.status_code == 401:
-                logger.warning(f"Building headers again for PATCH. Error: {error}")
-                headers = self.build_zoom_authorization_headers()
-                response = self.api_client.make_patch_request(
-                    api_path, headers=headers, data=data
-                )
-                return response
-        return None
+        response = self.api_client.make_patch_request(
+            api_path, headers=headers, data=data
+        )
+        return response

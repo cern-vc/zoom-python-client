@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "zoom-python-client"
-version = "0.0.3"
+version = "0.0.4"
 dependencies = ["python-dotenv>=0.21.0", "requests>=2.26.0"]
 authors = [{ name = "Rene Fernandez", email = "rene.fernandez@cern.ch" }]
 description = "Zoom API client for Python"
@@ -12,7 +12,7 @@ readme = "README.md"
 requires-python = ">=3.9"
 classifiers = [
   "Programming Language :: Python :: 3",
-  "License :: OSI Approved :: GPL3 License",
+  "License :: OSI Approved :: GNU General Public License v3 (GPLv3)",
   "Operating System :: OS Independent",
 ]
 
@@ -30,8 +30,8 @@ dev = [
 ]
 
 [project.urls]
-"Homepage" = "https://github.com/renefs/zoom-python-client"
-"Bug Tracker" = "https://github.com/renefs/zoom-python-client/issues"
+"Homepage" = "https://github.com/cern-vc/zoom-python-client"
+"Bug Tracker" = "https://github.com/cern-vc/zoom-python-client/issues"
 
 # [tool.setuptools]
 # package-dir = { "" = "src" }

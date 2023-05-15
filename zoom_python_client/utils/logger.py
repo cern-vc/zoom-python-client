@@ -13,6 +13,8 @@ def setup_logs(log_level=logging.WARNING):
 
     configure_stdout_logging(logger=logger, formatter=formatter, log_level=log_level)
 
+    return logger
+
 
 def configure_stdout_logging(logger, formatter=None, log_level=logging.WARNING):
     stream_handler = logging.StreamHandler(stream=sys.stdout)

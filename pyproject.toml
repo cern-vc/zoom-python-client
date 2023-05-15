@@ -30,8 +30,8 @@ dev = [
 ]
 
 [project.urls]
-"Homepage" = "https://github.com/renefs/zoom-python-client"
-"Bug Tracker" = "https://github.com/renefs/zoom-python-client/issues"
+"Homepage" = "https://github.com/cern-vc/zoom-python-client"
+"Bug Tracker" = "https://github.com/cern-vc/zoom-python-client/issues"
 
 # [tool.setuptools]
 # package-dir = { "" = "src" }

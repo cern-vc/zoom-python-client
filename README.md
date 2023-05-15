@@ -56,6 +56,14 @@ result = zoom_client.meetings.get_meeting(MEETING_ID)
 print(result)
 ```
 
+## Optional: How to configure the logging
+
+```python
+from zoom_python_client.zoom_api_client import ZoomApiClient
+
+setup_logs(log_level=logging.DEBUG)
+```
+
 ## Available endpoints
 
 ### **users**:

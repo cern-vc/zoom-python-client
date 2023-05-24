@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "zoom-python-client"
-version = "0.0.6"
+version = "0.0.6-beta.1"
 authors = ["Rene Fernandez Sanchez <rene.fernandez@cern.ch>"]
 maintainers = ["Rene Fernandez Sanchez <rene.fernandez@cern.ch>"]
 classifiers = [

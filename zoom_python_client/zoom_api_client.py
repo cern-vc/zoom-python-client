@@ -1,6 +1,6 @@
 import logging
 import os
-from typing import Any, Mapping, Union
+from typing import Any, Mapping, Optional, Union
 
 import requests
 from dotenv import load_dotenv
@@ -74,19 +74,30 @@ class ZoomApiClient(ZoomClientInterface):
         client_id: str,
         client_secret: str,
         api_endpoint="https://api.zoom.us/v2",
+        from_path: Optional[str] = None,
     ):
         self.api_endpoint = api_endpoint
+        self.from_path = from_path
         self.api_client = ApiClient(self.api_endpoint)
         self.authentication_client = ZoomAuthApiClient(
-            account_id, client_id, client_secret
+            account_id, client_id, client_secret, from_path=from_path
         )
 
         # Initialize components
         self.init_components()
 
+    def load_access_token_and_expire_seconds(self):
+        if self.from_path:
+            # If the token is in a file, we need to get the token from the file
+            access_token = self.authentication_client.get_access_token_from_file()
+            expire_seconds = self.authentication_client.get_expire_seconds_from_file()
+        else:
+            access_token = os.getenv("ZOOM_ACCESS_TOKEN", default=None)
+            expire_seconds = os.getenv("ZOOM_ACCESS_TOKEN_EXPIRE", default=None)
+        return access_token, expire_seconds
+
     def build_zoom_authorization_headers(self, force_token=False) -> dict:
-        access_token = os.getenv("ZOOM_ACCESS_TOKEN", default=None)
-        expire_seconds = os.getenv("ZOOM_ACCESS_TOKEN_EXPIRE", default=None)
+        access_token, expire_seconds = self.load_access_token_and_expire_seconds()
         if (
             not access_token
             or not expire_seconds

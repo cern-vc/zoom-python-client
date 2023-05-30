@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "zoom-python-client"
-version = "0.0.6"
+version = "0.1.0"
 authors = ["Rene Fernandez Sanchez <rene.fernandez@cern.ch>"]
 maintainers = ["Rene Fernandez Sanchez <rene.fernandez@cern.ch>"]
 classifiers = [
@@ -19,9 +19,9 @@ repository = "https://github.com/cern-vc/zoom-python-client"
 
 [tool.poetry.dependencies]
 python = "^3.9"
-python-dotenv = "0.21.0"
-requests = "2.23.0"
-typing-extensions = "4.3.0"
+python-dotenv = "^0.21"
+requests = "^2.23"
+typing-extensions = "^4.3"
 
 
 [tool.poetry.group.dev.dependencies]

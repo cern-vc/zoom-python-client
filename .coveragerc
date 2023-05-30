@@ -1,2 +1,2 @@
 [run]
-omit = zoom_client/zoom_client_interface.py
+omit = zoom_python_client/zoom_client_interface.py

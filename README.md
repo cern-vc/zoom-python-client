@@ -42,6 +42,22 @@ zoom_client = ZoomApiClient(
         client_secret="<YOUR CLIENT SECRET>")
 ```
 
+### Use the file system to store the access token instead of environment
+
+There are some cases where you might want to store the access token in the file system in order to share its value with other elements of the application (Ex. different pods on a Kubernetes/Openshift application).
+
+You can define the path where the token will be stored, passing the `use_path` variable to the constructor:
+
+```python
+from src.zoom_python_client.zoom_api_client import ZoomApiClient
+
+zoom_client = ZoomApiClient(
+        account_id="<YOUR ACCOUNT ID>",
+        client_id="<YOUR CLIENT ID>",
+        client_secret="<YOUR CLIENT SECRET>",
+        use_path="/path/to/token/folder")
+```
+
 
 ## How to make API calls
 

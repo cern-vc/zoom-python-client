@@ -1,3 +1,4 @@
+import os
 from time import time
 
 import pytest
@@ -56,3 +57,57 @@ def test_extract_access_token():
         client.extract_access_token({"access_token": "test", "expires_in": "test"})
     result = client.extract_access_token({"access_token": "test", "expires_in": 100})
     assert result == "test"
+
+
+def test_from_path_none():
+    client = ZoomAuthApiClient("aaa", "bbb", "ccc")
+    with pytest.raises(ZoomAuthApiClientError):
+        client.save_token_and_seconds_to_file({"access_token": "test"})
+
+
+def test_save_token_to_file():
+    client = ZoomAuthApiClient("aaa", "bbb", "ccc", from_path=".")
+    result = client.save_token_and_seconds_to_file(
+        {"access_token": "test", "expires_in": "12345"}
+    )
+    assert result
+    # with pytest.raises(ZoomAuthApiClientError, match="Unable to get access_token"):
+    #     client.extract_access_token({"expires_in": "test"})
+    # with pytest.raises(ZoomAuthApiClientError, match="Unable to get access_token"):
+    #     client.extract_access_token({"expires_in": 100})
+    # with pytest.raises(
+    #     ZoomAuthApiClientError,
+    #     match="Unable to set access_token expiration. expires_in is not an int",
+    # ):
+    #     client.extract_access_token({"access_token": "test", "expires_in": "test"})
+    # result = client.extract_access_token({"access_token": "test", "expires_in": 100})
+    # assert result == "test"
+
+
+def test_extract_access_token_file():
+    client = ZoomAuthApiClient("aaa", "bbb", "ccc", from_path=".")
+    result = client.extract_access_token(
+        {"access_token": "test", "expires_in": "12345"}
+    )
+    assert result
+
+
+def test_get_access_token_from_file_none():
+    client = ZoomAuthApiClient("aaa", "bbb", "ccc")
+    with pytest.raises(ZoomAuthApiClientError):
+        client.get_access_token_from_file()
+
+
+def test_get_file_not_found():
+    # Delete the access token and expire_seconds files
+    os.remove("access_token")
+    os.remove("expire_seconds")
+    client = ZoomAuthApiClient("aaa", "bbb", "ccc", from_path=".")
+    result = client.get_access_token_from_file()
+    assert result is None
+
+
+def test_get_expire_seconds_from_file_none():
+    client = ZoomAuthApiClient("aaa", "bbb", "ccc")
+    with pytest.raises(ZoomAuthApiClientError):
+        client.get_expire_seconds_from_file()

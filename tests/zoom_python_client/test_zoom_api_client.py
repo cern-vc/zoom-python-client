@@ -31,6 +31,11 @@ def test_init_from_dotenv():
     assert client is not None
 
 
+def test_init_with_from_path():
+    client = ZoomApiClient.init_from_dotenv(custom_dotenv=".env.sample", from_path=".")
+    assert client is not None
+
+
 class TestZoomApiClient(TestCaseWithAuth):
     @responses.activate
     def test_patch_request(self):
@@ -53,5 +58,35 @@ class TestZoomApiClient(TestCaseWithAuth):
             status=200,
         )
         client = ZoomApiClient("AAA", "BBB", "CCC", api_endpoint="http://localhost")
+        response = client.make_post_request("/test", {})
+        assert response.status_code == 200
+
+
+class TestZoomApiClientFromPath(TestCaseWithAuth):
+    @responses.activate
+    def test_patch_request(self):
+        responses.add(
+            responses.PATCH,
+            "http://localhost/test",
+            json={"response": "ok"},
+            status=200,
+        )
+        client = ZoomApiClient(
+            "AAA", "BBB", "CCC", api_endpoint="http://localhost", from_path="."
+        )
+        response = client.make_patch_request("/test", {})
+        assert response.status_code == 200
+
+    @responses.activate
+    def test_post_request(self):
+        responses.add(
+            responses.POST,
+            "http://localhost/test",
+            json={"response": "ok"},
+            status=200,
+        )
+        client = ZoomApiClient(
+            "AAA", "BBB", "CCC", api_endpoint="http://localhost", from_path="."
+        )
         response = client.make_post_request("/test", {})
         assert response.status_code == 200

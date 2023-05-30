@@ -80,6 +80,7 @@ class ZoomAuthApiClient:
         with open(file_path, "w") as token_file:
             new_expire = str(int(time()) + int(result["expires_in"]))
             token_file.write(new_expire)
+        return True
 
     def extract_access_token(self, result):
         if "access_token" in result and "expires_in" in result:

@@ -36,8 +36,7 @@ class ZoomAuthApiClient:
         ).decode()
         return encoded_auth
 
-    def is_zoom_access_token_expired(self):
-        expire_seconds = os.getenv("ZOOM_ACCESS_TOKEN_EXPIRE", default=None)
+    def is_zoom_access_token_expired(self, expire_seconds):
         current_seconds = int(time())
 
         if expire_seconds:
@@ -79,7 +78,8 @@ class ZoomAuthApiClient:
         # Save the expire_seconds to a file
         file_path = os.path.join(self.from_path, "expire_seconds")
         with open(file_path, "w") as token_file:
-            token_file.write(str(int(time()) + int(result["expires_in"])))
+            new_expire = str(int(time()) + int(result["expires_in"]))
+            token_file.write(new_expire)
 
     def extract_access_token(self, result):
         if "access_token" in result and "expires_in" in result:
@@ -108,15 +108,21 @@ class ZoomAuthApiClient:
             raise ZoomAuthApiClientError("from_path is None")
         # join the path to the file name
         file_path = os.path.join(self.from_path, "access_token")
-        with open(file_path, "r") as token_file:
-            access_token = token_file.read()
-        return access_token
+        try:
+            with open(file_path, "r") as token_file:
+                access_token = token_file.read()
+                return access_token
+        except FileNotFoundError:
+            return None
 
     def get_expire_seconds_from_file(self):
         # join the path to the file name
         if self.from_path is None:
             raise ZoomAuthApiClientError("from_path is None")
         file_path = os.path.join(self.from_path, "expire_seconds")
-        with open(file_path, "r") as token_file:
-            access_token = token_file.read()
-        return access_token
+        try:
+            with open(file_path, "r") as token_file:
+                access_token = token_file.read()
+                return access_token
+        except FileNotFoundError:
+            return None

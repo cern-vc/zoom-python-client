@@ -159,3 +159,6 @@ cython_debug/
 #  option (not recommended) you can uncomment the following to ignore the entire idea folder.
 #.idea/
 .pypirc
+# Names of the files where access token and expire seconds are stored
+access_token
+expire_seconds

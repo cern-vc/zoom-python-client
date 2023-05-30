@@ -41,12 +41,14 @@ class ZoomApiClient(ZoomClientInterface):
     api_endpoint: str = "https://api.zoom.us/v2"
 
     @staticmethod
-    def init_from_env():
+    def init_from_env(from_path: Optional[str] = None):
         try:
             account_id = os.environ["ZOOM_ACCOUNT_ID"]
             client_id = os.environ["ZOOM_CLIENT_ID"]
             client_secret = os.environ["ZOOM_CLIENT_SECRET"]
-            zoom_client = ZoomApiClient(account_id, client_id, client_secret)
+            zoom_client = ZoomApiClient(
+                account_id, client_id, client_secret, from_path=from_path
+            )
             return zoom_client
         except KeyError as error:
             raise ZoomClientEnvError(
@@ -54,10 +56,13 @@ class ZoomApiClient(ZoomClientInterface):
             ) from error
 
     @staticmethod
-    def init_from_dotenv(custom_dotenv=".env"):
+    def init_from_dotenv(
+        custom_dotenv=".env",
+        from_path: Optional[str] = None,
+    ):
         project_dir = get_project_dir()
         load_dotenv(os.path.join(project_dir, custom_dotenv), verbose=True)
-        zoom_client = ZoomApiClient.init_from_env()
+        zoom_client = ZoomApiClient.init_from_env(from_path=from_path)
         return zoom_client
 
     def init_components(self):
@@ -88,26 +93,29 @@ class ZoomApiClient(ZoomClientInterface):
 
     def load_access_token_and_expire_seconds(self):
         if self.from_path:
+            logger.debug("Loading token from file")
             # If the token is in a file, we need to get the token from the file
             access_token = self.authentication_client.get_access_token_from_file()
             expire_seconds = self.authentication_client.get_expire_seconds_from_file()
         else:
+            logger.debug("Loading token from environment")
             access_token = os.getenv("ZOOM_ACCESS_TOKEN", default=None)
             expire_seconds = os.getenv("ZOOM_ACCESS_TOKEN_EXPIRE", default=None)
         return access_token, expire_seconds
 
     def build_zoom_authorization_headers(self, force_token=False) -> dict:
         access_token, expire_seconds = self.load_access_token_and_expire_seconds()
+        token_from = "file" if self.from_path else "environment"
         if (
             not access_token
             or not expire_seconds
-            or self.authentication_client.is_zoom_access_token_expired()
+            or self.authentication_client.is_zoom_access_token_expired(expire_seconds)
             or force_token
         ):
-            logger.debug("Token is not in the environment. Requesting new token.")
+            logger.debug(f"Token is not in the {token_from}. Requesting new token.")
             access_token = self.authentication_client.get_acceess_token()
         else:
-            logger.debug("The token is the environment. No need for a new token.")
+            logger.debug(f"The token is the {token_from}. No need for a new token.")
         zoom_headers = {"Authorization": "Bearer " + access_token}
         headers = self.api_client.build_headers(extra_headers=zoom_headers)
         return headers

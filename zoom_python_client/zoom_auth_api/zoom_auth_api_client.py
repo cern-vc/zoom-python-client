@@ -22,13 +22,13 @@ class ZoomAuthApiClient:
         account_id: str,
         client_id: str,
         client_secret: str,
-        from_path: Optional[str] = None,
+        use_path: Optional[str] = None,
     ):
         self.account_id = account_id
         self.client_id = client_id
         self.client_secret = client_secret
         self.authentication_client = ApiClient(self.oauth_base_url)
-        self.from_path = from_path
+        self.use_path = use_path
 
     def base64_encode_auth(self):
         encoded_auth = b64encode(
@@ -70,13 +70,13 @@ class ZoomAuthApiClient:
 
     def save_token_and_seconds_to_file(self, result):
         # Save the token to a file
-        if self.from_path is None:
-            raise ZoomAuthApiClientError("from_path is None")
-        file_path = os.path.join(self.from_path, "access_token")
+        if self.use_path is None:
+            raise ZoomAuthApiClientError("use_path is None")
+        file_path = os.path.join(self.use_path, "access_token")
         with open(file_path, "w") as token_file:
             token_file.write(result["access_token"])
         # Save the expire_seconds to a file
-        file_path = os.path.join(self.from_path, "expire_seconds")
+        file_path = os.path.join(self.use_path, "expire_seconds")
         with open(file_path, "w") as token_file:
             new_expire = str(int(time()) + int(result["expires_in"]))
             token_file.write(new_expire)
@@ -84,7 +84,7 @@ class ZoomAuthApiClient:
 
     def extract_access_token(self, result):
         if "access_token" in result and "expires_in" in result:
-            if self.from_path:
+            if self.use_path:
                 self.save_token_and_seconds_to_file(result)
             else:
                 self.save_token_and_seconds_to_env(result)
@@ -105,10 +105,10 @@ class ZoomAuthApiClient:
         return access_token
 
     def get_access_token_from_file(self):
-        if self.from_path is None:
-            raise ZoomAuthApiClientError("from_path is None")
+        if self.use_path is None:
+            raise ZoomAuthApiClientError("use_path is None")
         # join the path to the file name
-        file_path = os.path.join(self.from_path, "access_token")
+        file_path = os.path.join(self.use_path, "access_token")
         try:
             with open(file_path, "r") as token_file:
                 access_token = token_file.read()
@@ -118,9 +118,9 @@ class ZoomAuthApiClient:
 
     def get_expire_seconds_from_file(self):
         # join the path to the file name
-        if self.from_path is None:
-            raise ZoomAuthApiClientError("from_path is None")
-        file_path = os.path.join(self.from_path, "expire_seconds")
+        if self.use_path is None:
+            raise ZoomAuthApiClientError("use_path is None")
+        file_path = os.path.join(self.use_path, "expire_seconds")
         try:
             with open(file_path, "r") as token_file:
                 access_token = token_file.read()

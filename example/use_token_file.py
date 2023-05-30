@@ -12,7 +12,7 @@ load_dotenv(os.path.join(project_dir, ".env"), verbose=True)
 
 TEST_PATH = os.environ["TEST_PATH"]
 
-zoom_client = ZoomApiClient.init_from_dotenv(from_path=TEST_PATH)
+zoom_client = ZoomApiClient.init_from_dotenv(use_path=TEST_PATH)
 setup_logs(log_level=logging.DEBUG)
 USER_ID = os.environ["USER_ID"]
 result = zoom_client.users.get_user(USER_ID)

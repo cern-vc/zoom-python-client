@@ -41,13 +41,13 @@ class ZoomApiClient(ZoomClientInterface):
     api_endpoint: str = "https://api.zoom.us/v2"
 
     @staticmethod
-    def init_from_env(from_path: Optional[str] = None):
+    def init_from_env(use_path: Optional[str] = None):
         try:
             account_id = os.environ["ZOOM_ACCOUNT_ID"]
             client_id = os.environ["ZOOM_CLIENT_ID"]
             client_secret = os.environ["ZOOM_CLIENT_SECRET"]
             zoom_client = ZoomApiClient(
-                account_id, client_id, client_secret, from_path=from_path
+                account_id, client_id, client_secret, use_path=use_path
             )
             return zoom_client
         except KeyError as error:
@@ -58,11 +58,11 @@ class ZoomApiClient(ZoomClientInterface):
     @staticmethod
     def init_from_dotenv(
         custom_dotenv=".env",
-        from_path: Optional[str] = None,
+        use_path: Optional[str] = None,
     ):
         project_dir = get_project_dir()
         load_dotenv(os.path.join(project_dir, custom_dotenv), verbose=True)
-        zoom_client = ZoomApiClient.init_from_env(from_path=from_path)
+        zoom_client = ZoomApiClient.init_from_env(use_path=use_path)
         return zoom_client
 
     def init_components(self):
@@ -79,20 +79,20 @@ class ZoomApiClient(ZoomClientInterface):
         client_id: str,
         client_secret: str,
         api_endpoint="https://api.zoom.us/v2",
-        from_path: Optional[str] = None,
+        use_path: Optional[str] = None,
     ):
         self.api_endpoint = api_endpoint
-        self.from_path = from_path
+        self.use_path = use_path
         self.api_client = ApiClient(self.api_endpoint)
         self.authentication_client = ZoomAuthApiClient(
-            account_id, client_id, client_secret, from_path=from_path
+            account_id, client_id, client_secret, use_path=use_path
         )
 
         # Initialize components
         self.init_components()
 
     def load_access_token_and_expire_seconds(self):
-        if self.from_path:
+        if self.use_path:
             logger.debug("Loading token from file")
             # If the token is in a file, we need to get the token from the file
             access_token = self.authentication_client.get_access_token_from_file()
@@ -105,7 +105,7 @@ class ZoomApiClient(ZoomClientInterface):
 
     def build_zoom_authorization_headers(self, force_token=False) -> dict:
         access_token, expire_seconds = self.load_access_token_and_expire_seconds()
-        token_from = "file" if self.from_path else "environment"
+        token_from = "file" if self.use_path else "environment"
         if (
             not access_token
             or not expire_seconds

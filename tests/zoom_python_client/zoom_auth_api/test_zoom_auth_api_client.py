@@ -23,20 +23,21 @@ def test_base64encode():
 
 
 def test_access_token_expired_true(monkeypatch):
-    monkeypatch.setenv("ZOOM_ACCESS_TOKEN_EXPIRE", str(int(time())))
+    expire_time = str(int(time()))
+    monkeypatch.setenv("ZOOM_ACCESS_TOKEN_EXPIRE", expire_time)
     client = ZoomAuthApiClient("aaa", "bbb", "ccc")
-    result = client.is_zoom_access_token_expired()
+    result = client.is_zoom_access_token_expired(expire_time)
     assert result
 
 
 def test_access_token_expired_false(monkeypatch):
     client = ZoomAuthApiClient("aaa", "bbb", "ccc")
-
+    expire_time = str(int(time() + client.minimum_expire_time_seconds + 100))
     monkeypatch.setenv(
         "ZOOM_ACCESS_TOKEN_EXPIRE",
-        str(int(time() + client.minimum_expire_time_seconds + 100)),
+        expire_time,
     )
-    result = client.is_zoom_access_token_expired()
+    result = client.is_zoom_access_token_expired(expire_time)
     assert not result
 
 

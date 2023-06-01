@@ -1,4 +1,5 @@
 import pytest
+import requests
 import responses
 
 from tests.zoom_python_client.base_test_case import TestCaseWithAuth
@@ -38,6 +39,18 @@ def test_init_with_use_path():
 
 class TestZoomApiClient(TestCaseWithAuth):
     @responses.activate
+    def test_get_request(self):
+        responses.add(
+            responses.GET,
+            "http://localhost/test",
+            json={"response": "ok"},
+            status=200,
+        )
+        client = ZoomApiClient("AAA", "BBB", "CCC", api_endpoint="http://localhost")
+        response = client.make_get_request("/test", {})
+        assert response.status_code == 200
+
+    @responses.activate
     def test_patch_request(self):
         responses.add(
             responses.PATCH,
@@ -64,6 +77,20 @@ class TestZoomApiClient(TestCaseWithAuth):
 
 class TestZoomApiClientFromPath(TestCaseWithAuth):
     @responses.activate
+    def test_get_request(self):
+        responses.add(
+            responses.GET,
+            "http://localhost/test",
+            json={"response": "ok"},
+            status=200,
+        )
+        client = ZoomApiClient(
+            "AAA", "BBB", "CCC", api_endpoint="http://localhost", use_path="."
+        )
+        response = client.make_get_request("/test", {})
+        assert response.status_code == 200
+
+    @responses.activate
     def test_patch_request(self):
         responses.add(
             responses.PATCH,
@@ -89,4 +116,95 @@ class TestZoomApiClientFromPath(TestCaseWithAuth):
             "AAA", "BBB", "CCC", api_endpoint="http://localhost", use_path="."
         )
         response = client.make_post_request("/test", {})
+        assert response.status_code == 200
+
+
+class TestZoomApiClientRetry(TestCaseWithAuth):
+    @responses.activate
+    def test_get_request(self):
+        responses.add(
+            responses.GET,
+            "http://localhost/test",
+            json={"response": "ok"},
+            status=401,
+        )
+        client = ZoomApiClient(
+            "AAA", "BBB", "CCC", api_endpoint="http://localhost", use_path="."
+        )
+        with pytest.raises(requests.exceptions.HTTPError):
+            response = client.make_get_request("/test", {})
+            assert response.status_code == 401
+
+    @responses.activate
+    def test_patch_request(self):
+        responses.add(
+            responses.PATCH,
+            "http://localhost/test",
+            json={"response": "ok"},
+            status=401,
+        )
+        client = ZoomApiClient(
+            "AAA", "BBB", "CCC", api_endpoint="http://localhost", use_path="."
+        )
+        with pytest.raises(requests.exceptions.HTTPError):
+            response = client.make_patch_request("/test", {})
+            assert response.status_code == 401
+
+    @responses.activate
+    def test_post_request(self):
+        responses.add(
+            responses.POST,
+            "http://localhost/test",
+            json={"response": "ok"},
+            status=401,
+        )
+        client = ZoomApiClient(
+            "AAA", "BBB", "CCC", api_endpoint="http://localhost", use_path="."
+        )
+        with pytest.raises(requests.exceptions.HTTPError):
+            response = client.make_post_request("/test", {})
+            assert response.status_code == 401
+
+
+class TestZoomApiClientRetryMethods(TestCaseWithAuth):
+    @responses.activate
+    def test_retry_get_request(self):
+        responses.add(
+            responses.GET,
+            "http://localhost/test",
+            json={"response": "ok"},
+            status=200,
+        )
+        client = ZoomApiClient(
+            "AAA", "BBB", "CCC", api_endpoint="http://localhost", use_path="."
+        )
+        response = client.retry_get_request("/test", "")
+        assert response.status_code == 200
+
+    @responses.activate
+    def test_retry_patch_request(self):
+        responses.add(
+            responses.PATCH,
+            "http://localhost/test",
+            json={"response": "ok"},
+            status=200,
+        )
+        client = ZoomApiClient(
+            "AAA", "BBB", "CCC", api_endpoint="http://localhost", use_path="."
+        )
+        response = client.retry_patch_request("/test", {})
+        assert response.status_code == 200
+
+    @responses.activate
+    def test_retry_post_request(self):
+        responses.add(
+            responses.POST,
+            "http://localhost/test",
+            json={"response": "ok"},
+            status=200,
+        )
+        client = ZoomApiClient(
+            "AAA", "BBB", "CCC", api_endpoint="http://localhost", use_path="."
+        )
+        response = client.retry_post_request("/test", {})
         assert response.status_code == 200

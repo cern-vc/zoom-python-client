@@ -1,18 +1,18 @@
 [tool.poetry]
 name = "zoom-python-client"
-version = "0.1.0"
+version = "0.1.1"
 authors = ["Rene Fernandez Sanchez <rene.fernandez@cern.ch>"]
 maintainers = ["Rene Fernandez Sanchez <rene.fernandez@cern.ch>"]
 classifiers = [
   "Programming Language :: Python :: 3",
-  "License :: OSI Approved :: GNU General Public License v3 (GPLv3)",
+  "License :: OSI Approved :: MIT License",
   "Operating System :: OS Independent",
 ]
 exclude = ["tests*", "example*", ".github*", ".git*", ".vscode*"]
 description = "Zoom API client for Python using server to server tokens"
 homepage = "https://github.com/cern-vc/zoom-python-client"
 keywords = ["zoom", "api"]
-license = "GPL-3.0-only"
+license = "MIT"
 packages = [{ include = "zoom_python_client" }]
 readme = "README.md"
 repository = "https://github.com/cern-vc/zoom-python-client"

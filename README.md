@@ -6,6 +6,14 @@
 
 Zoom API Python client with support for [Server to Server Oauth tokens](https://developers.zoom.us/docs/internal-apps/s2s-oauth/)
 
+## Install
+
+This package is [available on Pypi](https://pypi.org/project/zoom-python-client/)
+
+```bash
+pip install zoom-python-client
+```
+
 ## Usage
 
 ### Defining your env variables
@@ -75,7 +83,7 @@ print(result)
 ## Optional: How to configure the logging
 
 ```python
-from zoom_python_client.zoom_api_client import ZoomApiClient
+from zoom_python_client.utils.logger import setup_logs
 
 setup_logs(log_level=logging.DEBUG)
 ```

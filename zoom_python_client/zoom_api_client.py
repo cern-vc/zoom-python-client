@@ -112,7 +112,10 @@ class ZoomApiClient(ZoomClientInterface):
             or self.authentication_client.is_zoom_access_token_expired(expire_seconds)
             or force_token
         ):
-            logger.debug(f"Token is not in the {token_from}. Requesting new token.")
+            if force_token:
+                logger.debug("Forcing token refresh")
+            else:
+                logger.debug(f"Token is not in the {token_from}. Requesting new token.")
             access_token = self.authentication_client.get_acceess_token()
         else:
             logger.debug(f"The token is the {token_from}. No need for a new token.")
@@ -133,9 +136,26 @@ class ZoomApiClient(ZoomClientInterface):
         headers = self.build_zoom_authorization_headers()
         # convert parameters dict to query string
         query_string = self.build_query_string_from_dict(parameters)
+        response = requests.Response()
+        try:
+            response = self.api_client.make_get_request(
+                api_path + query_string, headers=headers
+            )
+        # Handle 401 error from requests
+        except requests.exceptions.HTTPError as error:
+            if error.response.status_code == 401:
+                logger.debug(
+                    f"Got 401 error from Zoom API Get ({error}). Retrying with a new token."
+                )
+                response = self.retry_get_request(api_path, query_string)
+        return response
+
+    def retry_get_request(self, api_path, query_string):
+        headers = self.build_zoom_authorization_headers(force_token=True)
         response = self.api_client.make_get_request(
             api_path + query_string, headers=headers
         )
+
         return response
 
     def make_post_request(
@@ -143,17 +163,51 @@ class ZoomApiClient(ZoomClientInterface):
     ) -> Union[requests.Response, None]:
         headers = self.build_zoom_authorization_headers()
         response = requests.Response()
+        try:
+            response = self.api_client.make_post_request(
+                api_path, headers=headers, data=data
+            )
+        # Handle 401 error from requests
+        except requests.exceptions.HTTPError as error:
+            if error.response.status_code == 401:
+                logger.debug(
+                    f"Got 401 error from Zoom API Post ({error}). Retrying with a new token."
+                )
+                response = self.retry_post_request(api_path, data)
+
+        return response
+
+    def retry_post_request(self, api_path, data):
+        headers = self.build_zoom_authorization_headers(force_token=True)
         response = self.api_client.make_post_request(
             api_path, headers=headers, data=data
         )
+
         return response
 
     def make_patch_request(
         self, api_path: str, data: Mapping[str, Any]
     ) -> Union[requests.Response, None]:
         headers = self.build_zoom_authorization_headers()
+        response = requests.Response()
+        try:
+            response = self.api_client.make_patch_request(
+                api_path, headers=headers, data=data
+            )
+        # Handle 401 error from requests
+        except requests.exceptions.HTTPError as error:
+            if error.response.status_code == 401:
+                # Retry generating a new token
+                logger.debug(
+                    f"Got 401 error from Zoom API Patch ({error}). Retrying with a new token."
+                )
+                response = self.retry_patch_request(api_path, data)
+        return response
 
+    def retry_patch_request(self, api_path, data):
+        headers = self.build_zoom_authorization_headers(force_token=True)
         response = self.api_client.make_patch_request(
             api_path, headers=headers, data=data
         )
+
         return response

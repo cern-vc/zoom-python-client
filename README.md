@@ -29,7 +29,7 @@ Define the following variables in your `env` or your `.env` file:
 ### Initialize the ZoomApiClient from environment variables
 
 ```python
-from src.zoom_python_client.zoom_api_client import ZoomApiClient
+from zoom_python_client.zoom_api_client import ZoomApiClient
 
 zoom_client = ZoomApiClient.init_from_env()
 ```
@@ -37,14 +37,15 @@ zoom_client = ZoomApiClient.init_from_env()
 ### Initialize the ZoomApiClient from .env
 
 ```python
-from src.zoom_python_client.zoom_api_client import ZoomApiClient
+from zoom_python_client.zoom_api_client import ZoomApiClient
 
 zoom_client = ZoomApiClient.init_from_dotenv()
 ```
+
 ### Initialize the ZoomApiClient manually
 
 ```python
-from src.zoom_python_client.zoom_api_client import ZoomApiClient
+from zoom_python_client.zoom_api_client import ZoomApiClient
 
 zoom_client = ZoomApiClient(
         account_id="<YOUR ACCOUNT ID>",
@@ -59,7 +60,7 @@ There are some cases where you might want to store the access token in the file 
 You can define the path where the token will be stored, passing the `use_path` variable to the constructor:
 
 ```python
-from src.zoom_python_client.zoom_api_client import ZoomApiClient
+from zoom_python_client.zoom_api_client import ZoomApiClient
 
 zoom_client = ZoomApiClient(
         account_id="<YOUR ACCOUNT ID>",
@@ -67,7 +68,6 @@ zoom_client = ZoomApiClient(
         client_secret="<YOUR CLIENT SECRET>",
         use_path="/path/to/token/folder")
 ```
-
 
 ## How to make API calls
 
@@ -93,18 +93,27 @@ setup_logs(log_level=logging.DEBUG)
 ## Available endpoints
 
 ### **users**:
+
 1. get user details
 2. get user meetings
+
 ### **meetings**:
+
 1. get meeting details
 2. get meeting token
+
 ### **meeting live streams**:
+
 1. get meeting live stream
 2. update live stream
 3. update livestream status
+
 ### **webinars**:
+
 1. get webinar details
+
 ### **webinar live streams**:
+
 1. get webinar live stream
 2. update webinar live stream
 3. update webinar livestream status

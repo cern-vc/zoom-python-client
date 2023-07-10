@@ -117,3 +117,9 @@ setup_logs(log_level=logging.DEBUG)
 1. get webinar live stream
 2. update webinar live stream
 3. update webinar livestream status
+
+### **zoom rooms**:
+
+1. get all zoom rooms
+2. get zoom room details
+3. get zoom room sensor data

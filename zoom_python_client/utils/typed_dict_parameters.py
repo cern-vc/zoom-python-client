@@ -22,7 +22,12 @@ def generate_parms_dict(data: DataType) -> dict:
     parameters = {}
     for key, value in data.items():
         if value is not None:
-            parameters[key] = value
+            if key == "from_date":
+                parameters["from"] = value
+            elif key == "to_date":
+                parameters["to"] = value
+            else:
+                parameters[key] = value
 
     logger.debug(f"Parameters: {parameters}")
     return parameters

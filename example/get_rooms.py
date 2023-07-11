@@ -17,7 +17,7 @@ parameters = RoomsListDict(
 
 result = zoom_client.rooms.get_rooms(parameters)
 
-print(f"Found {len(result['rooms'])} rooms:")
+logger.info("Found %d rooms:", len(result["rooms"]))
 
 for room in result["rooms"]:
-    print(f"\t- {room['name']} - {room['room_id']} - {room['status']}")
+    print("\t- %s - %s - %s", room["name"], room["room_id"], room["status"])

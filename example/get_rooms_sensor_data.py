@@ -23,25 +23,28 @@ if ROOM_ID is None:
 
 
 all_sensor_data = []
-para_room = RoomsSensorDataDict(
-    from_date=(datetime.datetime.now() - datetime.timedelta(hours=12)).isoformat(
-        timespec="seconds"
-    )
-    + "Z",
-    to_date=datetime.datetime.now().isoformat(timespec="seconds") + "Z",
+
+from_date = (datetime.datetime.now() - datetime.timedelta(hours=12)).isoformat(
+    timespec="seconds"
+) + "Z"
+to_date = datetime.datetime.now().isoformat(timespec="seconds") + "Z"
+
+room_params = RoomsSensorDataDict(
+    from_date=from_date,
+    to_date=to_date,
 )
 
 while True:
-    result = zoom_client.rooms.get_room_sensor_data(ROOM_ID, data=para_room)
+    result = zoom_client.rooms.get_room_sensor_data(ROOM_ID, data=room_params)
     all_sensor_data.extend(result["sensor_data"])
     if not result["next_page_token"]:
         break
-    para_room["next_page_token"] = result["next_page_token"]
+    room_params["next_page_token"] = result["next_page_token"]
 
-print(f"Found {len(all_sensor_data)} sensor data points:")
+logger.info("Found %d sensor data points:", len(all_sensor_data))
 
 for data in all_sensor_data:
     date = datetime.datetime.strptime(
         data["date_time"], "%Y-%m-%dT%H:%M:%SZ"
     ).astimezone(pytz.timezone("Europe/Zurich"))
-    print(f"\t-{date} - {data['sensor_value']}")
+    logger.info("\t-%s - %d", date, data["sensor_value"])

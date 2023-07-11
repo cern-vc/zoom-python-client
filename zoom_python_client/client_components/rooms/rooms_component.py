@@ -3,7 +3,7 @@ from enum import Enum
 
 from typing_extensions import NotRequired, TypedDict
 
-from zoom_python_client.utils.typed_dict_parameters import generate_parms_dict
+from zoom_python_client.utils.typed_dict_parameters import generate_parameters_dict
 from zoom_python_client.zoom_client_interface import ZoomClientInterface
 
 
@@ -70,7 +70,7 @@ class RoomsComponent:
 
     def get_rooms(self, data: RoomsListDict) -> dict:
         api_path = "/rooms"
-        parameters = generate_parms_dict(data)
+        parameters = generate_parameters_dict(data)
 
         response = self.client.make_get_request(api_path, parameters=parameters)
         result = response.json()
@@ -93,7 +93,7 @@ class RoomsComponent:
         ):
             raise ValueError("The date format should be in yyyy-MM-ddTHH:dd:ssZ format")
 
-        parameters = generate_parms_dict(data)
+        parameters = generate_parameters_dict(data)
 
         response = self.client.make_get_request(api_path, parameters=parameters)
         result = response.json()

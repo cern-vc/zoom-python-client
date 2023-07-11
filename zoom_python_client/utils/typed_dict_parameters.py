@@ -9,7 +9,7 @@ class DataType(TypedDict, total=False):
     ...
 
 
-def generate_parms_dict(data: DataType) -> dict:
+def generate_parameters_dict(data: DataType) -> dict:
     """Generate a dictionary of parameters to be used in the API request.
 
     Args:
@@ -29,5 +29,4 @@ def generate_parms_dict(data: DataType) -> dict:
             else:
                 parameters[key] = value
 
-    logger.debug(f"Parameters: {parameters}")
     return parameters

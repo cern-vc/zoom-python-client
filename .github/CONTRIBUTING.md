@@ -1,4 +1,4 @@
-# Contributing to Buho Stocks
+# Contributing to Zoom Python Client
 
 When contributing to this repository, please first discuss the change you wish to
 make via issue with the owners of this repository before making a change.

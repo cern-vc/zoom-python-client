@@ -12,6 +12,7 @@ from zoom_python_client.client_components.meeting_livestreams.meeting_livestream
 from zoom_python_client.client_components.meetings.meetings_component import (
     MeetingsComponent,
 )
+from zoom_python_client.client_components.rooms.rooms_component import RoomsComponent
 from zoom_python_client.client_components.users.users_component import UsersComponent
 from zoom_python_client.client_components.webinar_livestreams.webinar_livestreams_component import (
     WebinarLiveStreamsComponent,
@@ -72,6 +73,7 @@ class ZoomApiClient(ZoomClientInterface):
         self.meeting_livestreams = MeetingLiveStreamsComponent(self)
         self.webinars = WebinarsComponent(self)
         self.webinar_livestreams = WebinarLiveStreamsComponent(self)
+        self.rooms = RoomsComponent(self)
 
     def __init__(
         self,

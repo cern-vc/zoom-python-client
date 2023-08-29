@@ -43,7 +43,6 @@ class TestWebinarLiveStreamsComponent(TestCaseWithAuth):
         responses.add(
             responses.PATCH,
             "http://localhost/webinars/12345/livestream",
-            json={"response": "ok"},
             status=204,
         )
         zoom_client = ZoomApiClient("aaa", "bbb", "ccc", "http://localhost")
@@ -54,6 +53,7 @@ class TestWebinarLiveStreamsComponent(TestCaseWithAuth):
                 "page_url": "https://example.com/livestream/123",
                 "stream_key": "contact-it@example.com",
                 "stream_url": "https://example.com/livestream",
+                "resolution": "720p",
             },
         )
         assert result
@@ -74,6 +74,7 @@ class TestWebinarLiveStreamsComponent(TestCaseWithAuth):
                 "page_url": "https://example.com/livestream/123",
                 "stream_key": "contact-it@example.com",
                 "stream_url": "https://example.com/livestream",
+                "resolution": "720p",
             },
         )
         assert not result
@@ -83,7 +84,6 @@ class TestWebinarLiveStreamsComponent(TestCaseWithAuth):
         responses.add(
             responses.PATCH,
             "http://localhost/webinars/12345/livestream/status",
-            json={"response": "ok"},
             status=204,
         )
         zoom_client = ZoomApiClient("aaa", "bbb", "ccc", "http://localhost")

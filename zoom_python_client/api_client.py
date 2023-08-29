@@ -71,8 +71,6 @@ class ApiClient:
             dict: A JSON dict
         """
         full_url = self.api_base_url + api_path
-        logger.debug(headers)
-        logger.debug(json.dumps(data))
         response = requests.patch(full_url, headers=headers, data=json.dumps(data))
         response.raise_for_status()
         return response

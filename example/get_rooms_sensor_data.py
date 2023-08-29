@@ -11,7 +11,7 @@ from zoom_python_client.client_components.rooms.rooms_component import (
 from zoom_python_client.utils.logger import setup_logs
 from zoom_python_client.zoom_api_client import ZoomApiClient
 
-logger = setup_logs(log_level=logging.DEBUG)
+logger = setup_logs(log_level=logging.INFO)
 
 zoom_client = ZoomApiClient.init_from_dotenv(use_path=".")
 
@@ -47,4 +47,4 @@ for data in all_sensor_data:
     date = datetime.datetime.strptime(
         data["date_time"], "%Y-%m-%dT%H:%M:%SZ"
     ).astimezone(pytz.timezone("Europe/Zurich"))
-    logger.info("\t-%s - %d", date, data["sensor_value"])
+    logger.info("\t-%s - %s", date, data["sensor_value"])

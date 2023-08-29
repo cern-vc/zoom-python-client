@@ -20,4 +20,4 @@ result = zoom_client.rooms.get_rooms(parameters)
 logger.info("Found %d rooms:", len(result["rooms"]))
 
 for room in result["rooms"]:
-    print("\t- %s - %s - %s", room["name"], room["room_id"], room["status"])
+    logger.info("\t- %s - %s - %s", room["name"], room["id"], room["status"])

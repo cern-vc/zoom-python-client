@@ -6,6 +6,9 @@ import requests
 from dotenv import load_dotenv
 
 from zoom_python_client.api_client import ApiClient
+from zoom_python_client.client_components.calendars.calendars_component import (
+    CalendarsComponent,
+)
 from zoom_python_client.client_components.meeting_livestreams.meeting_livestreams_component import (
     MeetingLiveStreamsComponent,
 )
@@ -74,6 +77,7 @@ class ZoomApiClient(ZoomClientInterface):
         self.webinars = WebinarsComponent(self)
         self.webinar_livestreams = WebinarLiveStreamsComponent(self)
         self.rooms = RoomsComponent(self)
+        self.calendars = CalendarsComponent(self)
 
     def __init__(
         self,

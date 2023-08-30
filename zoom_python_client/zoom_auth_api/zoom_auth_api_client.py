@@ -125,5 +125,5 @@ class ZoomAuthApiClient:
             with open(file_path, "r") as token_file:
                 access_token = token_file.read()
                 return access_token
-        except FileNotFoundError:
+        except FileNotFoundError:  # pragma: no cover
             return None

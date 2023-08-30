@@ -123,3 +123,10 @@ setup_logs(log_level=logging.DEBUG)
 1. get all zoom rooms
 2. get zoom room details
 3. get zoom room sensor data
+
+### **calendars**:
+
+1. get calendar services list
+2. get calendar resources list
+3. get calendar resources by service id list
+4. get calendar resource details by id

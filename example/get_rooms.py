@@ -9,7 +9,9 @@ from zoom_python_client.zoom_api_client import ZoomApiClient
 
 logger = setup_logs(log_level=logging.DEBUG)
 
-zoom_client = ZoomApiClient.init_from_dotenv(use_path=".")
+zoom_client = ZoomApiClient.init_from_dotenv(
+    use_path="."
+)
 
 parameters = RoomsListDict(
     type=RoomType.ZOOM_ROOM,

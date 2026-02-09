@@ -81,14 +81,29 @@ class TestMeetingLiveStreamsComponent(TestCaseWithAuth):
 
     @responses.activate
     def test_update_meeting_livestreams_status_component(self):
+        settings = {
+            "active_speaker_name": False,
+            "display_name": "CERN_Webcast_Service",
+            "layout": "follow_host",
+            "close_caption": "embedded",
+        }
         responses.add(
             responses.PATCH,
             "http://localhost/meetings/12345/livestream/status",
             status=204,
+            match=[
+                responses.matchers.json_params_matcher(
+                    {"action": "start", "settings": settings}
+                )
+            ],
         )
         zoom_client = ZoomApiClient("aaa", "bbb", "ccc", "http://localhost")
         component = MeetingLiveStreamsComponent(zoom_client)
-        result = component.update_livestream_status("12345", "start")
+        result = component.update_livestream_status(
+            "12345",
+            "start",
+            settings=settings,
+        )
         assert result
 
     @responses.activate

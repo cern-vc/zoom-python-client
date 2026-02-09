@@ -116,7 +116,7 @@ setup_logs(log_level=logging.DEBUG)
 
 1. get webinar live stream
 2. update webinar live stream
-3. update webinar livestream status
+3. update webinar livestream status - Following [Zoom documentation](https://developers.zoom.us/docs/api/rest/reference/zoom-api/methods/#operation/meetingLiveStreamStatusUpdate).
 
 ### **zoom rooms**:
 

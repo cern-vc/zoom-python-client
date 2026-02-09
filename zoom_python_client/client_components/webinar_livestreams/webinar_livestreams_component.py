@@ -1,5 +1,7 @@
 from json import JSONDecodeError
-from typing import TypedDict
+from typing import Any, Dict, Optional
+
+from typing_extensions import NotRequired, TypedDict
 
 from zoom_python_client.zoom_auth_api.zoom_auth_api_client import ZoomAuthApiClientError
 from zoom_python_client.zoom_client_interface import ZoomClientInterface
@@ -14,6 +16,7 @@ class LiveStreamDict(TypedDict):
 
 class LiveStreamStatusDict(TypedDict):
     action: str
+    settings: NotRequired[Dict[str, Any]]
 
 
 class WebinarLiveStreamsComponent:
@@ -38,9 +41,16 @@ class WebinarLiveStreamsComponent:
             return True
         return False
 
-    def update_livestream_status(self, meeting_id: str, action: str) -> bool:
+    def update_livestream_status(
+        self,
+        meeting_id: str,
+        action: str,
+        settings: Optional[Dict[str, Any]] = None,
+    ) -> bool:
         api_path = f"/webinars/{meeting_id}/livestream/status"
         data: LiveStreamStatusDict = {"action": action}
+        if settings is not None:
+            data["settings"] = settings
         response = self.client.make_patch_request(api_path, data)
         if response.status_code == 204:
             return True

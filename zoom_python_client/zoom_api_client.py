@@ -143,17 +143,22 @@ class ZoomApiClient(ZoomClientInterface):
         # convert parameters dict to query string
         query_string = self.build_query_string_from_dict(parameters)
         response = requests.Response()
-        try:
-            response = self.api_client.make_get_request(
-                api_path + query_string, headers=headers
-            )
+        #try:
+        response = self.api_client.make_get_request(
+            api_path + query_string, headers=headers
+        )
         # Handle 401 error from requests
-        except requests.exceptions.HTTPError as error:
-            if error.response.status_code == 401:
-                logger.debug(
-                    f"Got 401 error from Zoom API Get ({error}). Retrying with a new token."
-                )
-                response = self.retry_get_request(api_path, query_string)
+        #except requests.exceptions.HTTPError as error:
+        #    if error.response.status_code == 401:
+        #        logger.debug(
+        #            f"Got 401 error from Zoom API Get ({error}). Retrying with a new token."
+        #        )
+        #        response = self.retry_get_request(api_path, query_string)
+        #    else:
+        #        logger.debug(
+        #            msg=f"Go exception {error.response.status_code} - {error.strerror}"
+        #        ) 
+
         return response
 
     def retry_get_request(self, api_path, query_string):

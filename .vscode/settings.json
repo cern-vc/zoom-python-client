@@ -24,10 +24,7 @@
   "python.analysis.inlayHints.functionReturnTypes": true,
   "editor.formatOnSave": true,
   "isort.check": true,
-  "isort.args": [
-    "--profile",
-    "black"
-  ],
+  "isort.args": ["--profile", "black"],
   "python.testing.pytestEnabled": true,
   "python.testing.pytestArgs": [
     "tests",
@@ -38,7 +35,7 @@
   ],
   "[python]": {
     "editor.codeActionsOnSave": {
-      "source.organizeImports": true
+      "source.organizeImports": "explicit"
     },
     "editor.defaultFormatter": "ms-python.black-formatter",
     "editor.codeLens": true
@@ -50,6 +47,6 @@
   "files.exclude": {
     "**/__pycache__": true,
     "**/.pytest_cache": true,
-    "**/.mypy*": true,
-  },
+    "**/.mypy*": true
+  }
 }

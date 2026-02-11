@@ -12,12 +12,12 @@ MEETING_ID = os.environ["MEETING_ID"]
 result = zoom_client.meeting_livestreams.get_livestream(MEETING_ID)
 print(result)
 
-settings =  {
+settings = {
     "active_speaker_name": False,
     "display_name": "CERN_Webcast_Service",
     "layout": "follow_host",
-    "close_caption": "embedded"
-  }
+    "close_caption": "embedded",
+}
 started = zoom_client.meeting_livestreams.update_livestream_status(
     MEETING_ID,
     "start",

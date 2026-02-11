@@ -11,4 +11,3 @@ MEETING_ID = os.environ["MEETING_ID"]
 
 result = zoom_client.meeting_livestreams.get_livestream(MEETING_ID)
 print(result)
-

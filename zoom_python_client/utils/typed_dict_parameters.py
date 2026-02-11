@@ -6,7 +6,7 @@ logger = logging.getLogger("python_zoom_client")
 
 
 class DataType(TypedDict, total=False):
-    ...
+    pass
 
 
 def generate_parameters_dict(data: DataType) -> dict:

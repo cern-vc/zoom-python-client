@@ -162,3 +162,4 @@ cython_debug/
 # Names of the files where access token and expire seconds are stored
 access_token
 expire_seconds
+.DS_Store

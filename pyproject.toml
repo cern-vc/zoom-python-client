@@ -21,7 +21,7 @@ readme = "README.md"
 repository = "https://github.com/cern-vc/zoom-python-client"
 
 [tool.poetry.dependencies]
-python = "^3.9"
+python = "^3.10"
 python-dotenv = "^1.0.0"
 requests = "^2.31.0"
 typing-extensions = "^4.7.1"
